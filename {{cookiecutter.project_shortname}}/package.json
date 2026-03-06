@@ -1,0 +1,50 @@
+{
+  "type": "module",
+  "name": "{{ cookiecutter.project_shortname }}",
+  "version": "0.0.1",
+  "description": "{{ cookiecutter.description }}",
+{% if cookiecutter.github_org -%}
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/{{ cookiecutter.github_org }}/{{ cookiecutter.project_shortname.replace('_', '-') }}.git"
+  },
+  "bugs": {
+    "url": "https://github.com/{{ cookiecutter.github_org }}/{{ cookiecutter.project_shortname.replace('_', '-') }}/issues"
+  },
+  "homepage": "https://github.com/{{ cookiecutter.github_org }}/{{ cookiecutter.project_shortname.replace('_', '-') }}",
+{%- endif %}
+  "main": "{{cookiecutter.project_shortname}}/index.js",
+  "scripts": {
+    "start": "vite --config ./vite.config.js",
+    "validate-init": "python _validate_init.py",
+    "prepublishOnly": "npm run validate-init",
+    "build:js": "vite build --config vite.config.js",
+    "build:backends": "dash-generate-components ./src/lib/components {{ cookiecutter.project_shortname }} -p package-info.json --r-prefix '{{ cookiecutter.r_prefix }}' --jl-prefix '{{ cookiecutter.jl_prefix }}' --ignore \\.test\\.",
+    "build:backends-activated": "(. venv/bin/activate || venv\\scripts\\activate && npm run build:backends)",
+    "build": "npm run build:js && npm run build:backends",
+    "build:activated": "npm run build:js && npm run build:backends-activated"
+  },
+  "author": "{{ cookiecutter.author_name }} <{{ cookiecutter.author_email }}>",
+  "license": "{% set _license_identifiers = {'MIT License': 'MIT','BSD License': 'BSD','ISC License': 'ISC','Apache Software License 2.0': 'Apache-2.0','GNU General Public License v3': 'GPL-3.0','Not open source': ''} %}{{ _license_identifiers[cookiecutter.license] }}",
+  "dependencies": {
+    "ramda": "^0.26.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "copyfiles": "^2.1.1",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint-plugin-react": "^7.14.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "prop-types": "^15.8.1",
+    "react": "^18.2.0",
+    "react-docgen": "^5.4.3",
+    "react-dom": "^18.2.0",
+    "vite": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=14.18.0",
+    "npm": ">=8.0.0"
+  }
+}
