@@ -1,5 +1,4 @@
 import fs from 'fs';
-import path from 'path';
 
 function getFingerprint() {
     const packageJson = JSON.parse(fs.readFileSync('./package.json', 'utf8'));
