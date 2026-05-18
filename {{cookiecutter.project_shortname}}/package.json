@@ -14,6 +14,10 @@
 {%- endif %}
   "main": "{{ cookiecutter.project_shortname }}/{{ cookiecutter.project_shortname }}.min.js",
   "scripts": {
+    "check-node": "node scripts/check-node-version.mjs",
+    "preinstall": "node scripts/check-node-version.mjs",
+    "prestart": "node scripts/check-node-version.mjs",
+    "prebuild:js": "node scripts/check-node-version.mjs",
     "start": "vite --host 0.0.0.0 --open",
     "validate-init": "python _validate_init.py",
     "prepublishOnly": "npm run validate-init",

@@ -12,6 +12,8 @@ use_async = '{{cookiecutter.use_async}}'
 
 
 is_windows = sys.platform == 'win32'
+minimum_node20 = (20, 19, 0)
+minimum_node22 = (22, 12, 0)
 
 if is_windows:
     python_executable = os.path.join('venv', 'Scripts', 'python')
@@ -35,6 +37,48 @@ def _execute_command(cmd):
     return status
 
 
+def _parse_node_version(version):
+    parts = version.strip().lstrip('v').split('-')[0].split('.')
+    return tuple(int(part) for part in parts[:3])
+
+
+def _is_supported_node_version(version):
+    if version[0] == 20:
+        return version >= minimum_node20
+
+    if version[0] == 21:
+        return False
+
+    return version >= minimum_node22
+
+
+def _check_node_version():
+    try:
+        version_output = subprocess.check_output(
+            ['node', '--version'],
+            universal_newlines=True,
+        )
+    except (OSError, subprocess.CalledProcessError):
+        print(
+            'Node.js is required to install and build this project. '
+            'Please install Node.js ^20.19.0 or >=22.12.0.',
+            file=sys.stderr
+        )
+        sys.exit(1)
+
+    version = _parse_node_version(version_output)
+
+    if not _is_supported_node_version(version):
+        print(
+            'Unsupported Node.js version: {}\n\n'
+            'This template requires Node.js ^20.19.0 or >=22.12.0. '
+            'Please upgrade Node.js and regenerate or '
+            'reinstall the project dependencies.'.format(version_output.strip()),
+            file=sys.stderr
+        )
+        sys.exit(1)
+
+
 
 # Remove the cookiecutter_templates directory since it only contains
 # files that are conditionally included.
@@ -53,6 +97,8 @@ if install_deps != 'True':
           ' and install the dependencies in requirements.txt',
           file=sys.stderr)
     sys.exit(0)
+
+_check_node_version()
 
 # Create a virtual env
 venv = '{} -m venv venv'.format(sys.executable)

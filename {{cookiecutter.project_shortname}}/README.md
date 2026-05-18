@@ -6,6 +6,8 @@
 
 ## Quick Start
 
+Requires Node.js `^20.19.0 || >=22.12.0` and npm 10+.
+
 Install dependencies if they were not installed during project generation:
 
 ```bash
