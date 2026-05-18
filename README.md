@@ -1,5 +1,7 @@
 # Dash Component Vite Boilerplate
 
+English | [简体中文](README.zh-CN.md)
+
 Cookiecutter template for building Dash component libraries with a modern Vite-powered JavaScript build.
 
 This template keeps the core behavior of Plotly's Webpack-based [`dash-component-boilerplate`](https://github.com/plotly/dash-component-boilerplate): it generates React component source, Dash Python wrappers, R wrappers, Julia wrappers, package metadata, tests, and publish-ready assets. The JavaScript build is implemented with Vite instead of Webpack.
@@ -21,6 +23,9 @@ This template keeps the core behavior of Plotly's Webpack-based [`dash-component
 - npm 10+
 - `cookiecutter`
 
+The generated project enforces this Node.js requirement during dependency
+installation and JavaScript builds.
+
 Install Cookiecutter if needed:
 
 ```bash
@@ -35,10 +40,10 @@ From a local checkout:
 cookiecutter path/to/dash-component-vite-boilerplate
 ```
 
-If this template is hosted on GitHub:
+From GitHub:
 
 ```bash
-cookiecutter gh:<your-org>/dash-component-vite-boilerplate
+cookiecutter gh:HogaStack/dash-component-vite-boilerplate
 ```
 
 You will be prompted for:
