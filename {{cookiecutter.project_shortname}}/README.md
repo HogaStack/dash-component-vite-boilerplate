@@ -45,7 +45,7 @@ Useful commands:
 ```bash
 npm start
 npm run build:js
-npm run build:backends
+npm run build:python
 npm run build
 npm run lint
 pytest tests
@@ -53,8 +53,8 @@ pytest tests
 
 - `npm start` runs the standalone Vite demo app in `src/demo`.
 - `npm run build:js` writes Dash browser bundles into `{{cookiecutter.project_shortname}}/`.
-- `npm run build:backends` regenerates Python/R/Julia wrappers from `src/lib/components`.
-- `npm run build` runs both JavaScript and backend generation.
+- `npm run build:python` regenerates Python wrappers from `src/lib/components`.
+- `npm run build` runs both JavaScript and Python wrapper generation.
 - `npm run lint` checks the JavaScript source.
 - `pytest tests` runs the generated Dash integration test suite.
 

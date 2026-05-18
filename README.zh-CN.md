@@ -4,17 +4,17 @@
 
 用于构建 Dash 组件库的 Cookiecutter 模板，JavaScript 构建流程由现代化的 Vite 驱动。
 
-本模板保留了 Plotly 基于 Webpack 的 [`dash-component-boilerplate`](https://github.com/plotly/dash-component-boilerplate) 的核心行为：生成 React 组件源码、Dash Python 包装器、R 包装器、Julia 包装器、包元数据、测试以及可发布资源。JavaScript 构建部分改为使用 Vite 实现。
+本模板保留了 Plotly 基于 Webpack 的 [`dash-component-boilerplate`](https://github.com/plotly/dash-component-boilerplate) 的核心 Python/Dash 工作流：生成 React 组件源码、Dash Python 包装器、包元数据、测试以及可发布资源。JavaScript 构建部分改为使用 Vite 实现。
 
 ## 功能特性
 
 - 基于 Vite 8 的 Dash 浏览器端包构建。
 - 支持函数组件和类组件的 React 组件模板。
 - 可选的异步组件输出，支持 Dash 感知的懒加载。
-- 通过 Dash 组件生成器生成 Python/R/Julia 包装器。
+- 通过 Dash 组件生成器生成 Python 包装器。
 - 提供本地 Vite demo 应用，便于快速前端开发。
 - 针对生成的 JavaScript、CSS、元数据和 `MANIFEST.in` 进行发布校验。
-- 通过 `node scripts/generate-components.mjs` 实现跨平台后端生成。
+- 通过 `node scripts/generate-components.mjs` 生成 Python 包装器。
 
 ## 环境要求
 
@@ -52,7 +52,6 @@ cookiecutter gh:HogaStack/dash-component-vite-boilerplate
 - `component_name`：初始 React 组件名。应使用 PascalCase，例如 `MyComponent`。
 - `component_type`：函数组件或类组件。
 - `use_async`：是否将初始组件生成为异步/懒加载组件。
-- `jl_prefix` / `r_prefix`：可选的 Julia/R 组件前缀。
 - `author_name` / `author_email`：包元数据。
 - `github_org`：可选的 GitHub 所有者，用于生成包 URL。
 - `description`：包描述。
@@ -84,7 +83,7 @@ pip install -r requirements.txt
 ```bash
 npm start
 npm run build:js
-npm run build:backends
+npm run build:python
 npm run build
 npm run lint
 python usage.py
@@ -92,8 +91,8 @@ python usage.py
 
 - `npm start` 会从 `src/demo` 启动独立的 Vite demo 应用。
 - `npm run build:js` 会将 Dash JavaScript 包写入 Python 包目录。
-- `npm run build:backends` 会基于 `src/lib/components` 重新生成 Python/R/Julia 包装器。
-- `npm run build` 会同时运行 JavaScript 构建和后端生成。
+- `npm run build:python` 会基于 `src/lib/components` 重新生成 Python 包装器。
+- `npm run build` 会同时运行 JavaScript 构建和 Python 包装器生成。
 - `python usage.py` 会启动一个使用生成组件的示例 Dash 应用。
 
 ## 异步组件

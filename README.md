@@ -4,17 +4,17 @@ English | [简体中文](README.zh-CN.md)
 
 Cookiecutter template for building Dash component libraries with a modern Vite-powered JavaScript build.
 
-This template keeps the core behavior of Plotly's Webpack-based [`dash-component-boilerplate`](https://github.com/plotly/dash-component-boilerplate): it generates React component source, Dash Python wrappers, R wrappers, Julia wrappers, package metadata, tests, and publish-ready assets. The JavaScript build is implemented with Vite instead of Webpack.
+This template keeps the core Python/Dash workflow of Plotly's Webpack-based [`dash-component-boilerplate`](https://github.com/plotly/dash-component-boilerplate): it generates React component source, Dash Python wrappers, package metadata, tests, and publish-ready assets. The JavaScript build is implemented with Vite instead of Webpack.
 
 ## Features
 
 - Vite 8 library builds for Dash browser bundles.
 - React component templates for function and class components.
 - Optional async component output with Dash-aware lazy loading.
-- Python/R/Julia wrapper generation through Dash's component generator.
+- Python wrapper generation through Dash's component generator.
 - Local Vite demo app for fast frontend iteration.
 - Publish validation for generated JavaScript, CSS, metadata, and `MANIFEST.in`.
-- Cross-platform backend generation through `node scripts/generate-components.mjs`.
+- Python package wrapper generation through `node scripts/generate-components.mjs`.
 
 ## Requirements
 
@@ -53,7 +53,6 @@ You will be prompted for:
 - `component_name`: Initial React component name. It should be PascalCase, for example `MyComponent`.
 - `component_type`: Function component or class component.
 - `use_async`: Whether to generate the initial component as an async/lazy-loaded component.
-- `jl_prefix` / `r_prefix`: Optional Julia/R component prefixes.
 - `author_name` / `author_email`: Package metadata.
 - `github_org`: Optional GitHub owner used for package URLs.
 - `description`: Package description.
@@ -85,7 +84,7 @@ Common commands:
 ```bash
 npm start
 npm run build:js
-npm run build:backends
+npm run build:python
 npm run build
 npm run lint
 python usage.py
@@ -93,8 +92,8 @@ python usage.py
 
 - `npm start` runs the standalone Vite demo app from `src/demo`.
 - `npm run build:js` writes Dash JavaScript bundles into the Python package directory.
-- `npm run build:backends` regenerates Python/R/Julia wrappers from `src/lib/components`.
-- `npm run build` runs both JavaScript and backend generation.
+- `npm run build:python` regenerates Python wrappers from `src/lib/components`.
+- `npm run build` runs both JavaScript and Python wrapper generation.
 - `python usage.py` starts a sample Dash app using the generated component.
 
 ## Async Components

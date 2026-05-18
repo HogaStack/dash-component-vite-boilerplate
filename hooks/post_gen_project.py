@@ -137,7 +137,7 @@ _execute_command('npm run build:js')
 # But it also needs shell to be true for the command to work.
 # And shell doesn't work with `npm run` nor `. venv/bin/activate`
 # The command works in a terminal.
-_execute_command('npm run build:backends-activated')
+_execute_command('npm run build:python-activated')
 
 print('\n{} ready!\n'.format(project_shortname))
 

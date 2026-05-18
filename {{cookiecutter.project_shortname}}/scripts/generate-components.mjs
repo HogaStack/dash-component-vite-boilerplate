@@ -40,13 +40,6 @@ const args = [
     '\\.test\\.',
 ];
 
-{% if cookiecutter.r_prefix -%}
-args.push('--r-prefix', '{{ cookiecutter.r_prefix }}');
-{% endif -%}
-{% if cookiecutter.jl_prefix -%}
-args.push('--jl-prefix', '{{ cookiecutter.jl_prefix }}');
-{% endif -%}
-
 const result = spawnSync(getPythonExecutable(), args, {
     cwd: projectRoot,
     stdio: 'inherit',
