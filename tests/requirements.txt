@@ -1,2 +1,3 @@
-dash[dev,testing]>=1.15.0
+cookiecutter
+dash[dev,testing]>=2.0.0,<4
 pytest-cookies

@@ -1,98 +1,161 @@
 # {{cookiecutter.project_name}}
 
-{{cookiecutter.project_name}} is a Dash component library built with Vite.
+{{cookiecutter.project_name}} is a Dash component library.
 
 {{cookiecutter.description}}
 
-Get started with:
-1. Install Dash and its dependencies: https://dash.plotly.com/installation
-2. Run `python usage.py`
-3. Visit http://localhost:8050 in your web browser
+## Quick Start
+
+Install dependencies if they were not installed during project generation:
+
+```bash
+npm install
+python -m venv venv
+venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+On macOS/Linux, activate with:
+
+```bash
+. venv/bin/activate
+```
+
+Build the component wrappers and run the sample app:
+
+```bash
+npm run build
+python usage.py
+```
+
+Then open http://localhost:8050.
+
+## Development
+
+Edit the initial component in:
+
+```text
+src/lib/components/{{cookiecutter.component_name}}.react.js
+```
+
+Useful commands:
+
+```bash
+npm start
+npm run build:js
+npm run build:backends
+npm run build
+npm run lint
+pytest tests
+```
+
+- `npm start` runs the standalone Vite demo app in `src/demo`.
+- `npm run build:js` writes Dash browser bundles into `{{cookiecutter.project_shortname}}/`.
+- `npm run build:backends` regenerates Python/R/Julia wrappers from `src/lib/components`.
+- `npm run build` runs both JavaScript and backend generation.
+- `npm run lint` checks the JavaScript source.
+- `pytest tests` runs the generated Dash integration test suite.
+
+## Async Components
+
+{% if cookiecutter.use_async == "True" -%}
+This project was generated with async component support enabled.
+
+The public Dash wrapper lives in:
+
+```text
+src/lib/components/{{cookiecutter.component_name}}.react.js
+```
+
+The real component implementation lives in:
+
+```text
+src/lib/fragments/{{cookiecutter.component_name}}.react.js
+```
+
+`npm run build:js` emits `async-{{cookiecutter.component_name}}.js` and registers it for Dash lazy loading.
+{%- else -%}
+This project was generated without async component support. To add async components later, add fragment files under `src/lib/fragments/` and wire a lazy wrapper from `src/lib/components/`.
+{%- endif %}
+
+## Python Usage
+
+The generated package can be imported in a Dash app:
+
+```python
+import {{cookiecutter.project_shortname}}
+from dash import Dash, html
+
+app = Dash(__name__)
+app.layout = html.Div([
+    {{cookiecutter.project_shortname}}.{{cookiecutter.component_name}}(
+        id="example",
+        label="Example",
+        value="my-value",
+    )
+])
+```
+
+See `usage.py` for a complete callback example.
+
+## Tests
+
+Install test dependencies:
+
+```bash
+pip install -r tests/requirements.txt
+```
+
+Run tests:
+
+```bash
+pytest tests --headless
+```
+
+The sample test in `tests/test_usage.py` loads `usage.py` and interacts with the component through Dash's Selenium testing fixture.
+
+## Styling
+
+Add custom CSS files to the package directory:
+
+```text
+{{cookiecutter.project_shortname}}/
+```
+
+CSS files in that directory are discovered by `{{cookiecutter.project_shortname}}/__init__.py` and added to Dash's `_css_dist`. Make sure publishable assets are included in `MANIFEST.in`.
+
+## Publishing
+
+Build and validate assets before publishing:
+
+```bash
+npm run build
+npm run validate-init
+python setup.py sdist bdist_wheel
+```
+
+Test the source distribution in a clean environment:
+
+```bash
+pip install dist/{{cookiecutter.project_shortname}}-0.0.1.tar.gz
+```
+
+Publish to PyPI:
+
+```bash
+twine upload dist/*
+```
+
+{% if cookiecutter.publish_on_npm|string == "True" -%}
+This project is configured to publish JavaScript assets to npm/unpkg. Publish the npm package too:
+
+```bash
+npm publish
+```
+{%- else -%}
+This project is configured to serve JavaScript assets locally from the Python package, so npm publishing is optional.
+{%- endif %}
 
 ## Contributing
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md)
-
-### Install dependencies
-
-If you have selected install_dependencies during the prompt, you can skip this part.
-
-1. Install npm packages
-    ```
-    $ npm install
-    ```
-2. Create a virtual env and activate.
-    ```
-    $ virtualenv venv
-    $ . venv/bin/activate
-    ```
-    _Note: venv\Scripts\activate for windows_
-
-3. Install python packages required to build components.
-    ```
-    $ pip install -r requirements.txt
-    ```
-4. Install the python packages for testing (optional)
-    ```
-    $ pip install -r tests/requirements.txt
-    ```
-
-### Write your component code in `src/lib/components/{{cookiecutter.component_name}}.react.js`.
-
-- The demo app is in `src/demo` and you will import your example component code into your demo app.
-- Test your code in a Python environment:
-    1. Build your code
-        ```
-        $ npm run build
-        ```
-    2. Run and modify the `usage.py` sample dash app:
-        ```
-        $ python usage.py
-        ```
-- Write tests for your component.
-    - A sample test is available in `tests/test_usage.py`, it will load `usage.py` and you can then automate interactions with selenium.
-    - Run the tests with `$ pytest tests`.
-    - The Dash team uses these types of integration tests extensively. Browse the Dash component code on GitHub for more examples of testing (e.g. https://github.com/plotly/dash-core-components)
-- Add custom styles to your component by putting your custom CSS files into your distribution folder (`{{cookiecutter.project_shortname}}`).
-    - Make sure that they are referenced in `MANIFEST.in` so that they get properly included when you're ready to publish your component.
-    - Make sure the stylesheets are added to the `_css_dist` dict in `{{cookiecutter.project_shortname}}/__init__.py` so dash will serve them automatically when the component suite is requested.
-- [Review your code](./review_checklist.md)
-
-### Create a production build and publish:
-
-1. Build your code:
-    ```
-    $ npm run build
-    ```
-2. Create a Python distribution
-    ```
-    $ python setup.py sdist bdist_wheel
-    ```
-    This will create source and wheel distribution in the generated the `dist/` folder.
-    See [PyPA](https://packaging.python.org/guides/distributing-packages-using-setuptools/#packaging-your-project)
-    for more information.
-
-3. Test your tarball by copying it into a new environment and installing it locally:
-    ```
-    $ pip install {{cookiecutter.project_shortname}}-0.0.1.tar.gz
-    ```
-
-4. If it works, then you can publish the component to NPM and PyPI:
-    1. Publish on PyPI
-        ```
-        $ twine upload dist/*
-        ```
-    2. Cleanup the dist folder (optional)
-        ```
-        $ rm -rf dist
-        ```
-    3. Publish on NPM (Optional if chosen False in `publish_on_npm`)
-        ```
-        $ npm publish
-        ```
-        _Publishing your component to NPM will make the JavaScript bundles available on the unpkg CDN. By default, Dash serves the component library's CSS and JS locally, but if you choose to publish the package to NPM you can set `serve_locally` to `False` and you may see faster load times._
-
-5. Share your component with the community! https://community.plotly.com/c/dash
-    1. Publish this repository to GitHub
-    2. Tag your GitHub repository with the plotly-dash tag so that it appears here: https://github.com/topics/plotly-dash
-    3. Create a post in the Dash community forum: https://community.plotly.com/c/dash
+See [CONTRIBUTING.md](./CONTRIBUTING.md) and [review_checklist.md](./review_checklist.md).

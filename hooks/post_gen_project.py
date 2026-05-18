@@ -40,9 +40,6 @@ def _execute_command(cmd):
 # files that are conditionally included.
 template_dir = os.path.join(os.getcwd(), 'cookiecutter_templates')
 shutil.rmtree(template_dir)
-
-print("\n\n\nuse_async")
-print(use_async)
 # If it doesn't use async, we can remove the fragments and lazyloader.js
 if use_async != "True":
     print('use_async is set to False, your component will not be lazy loaded and fragments will not be created.')
@@ -94,13 +91,7 @@ _execute_command('npm run build:js')
 # But it also needs shell to be true for the command to work.
 # And shell doesn't work with `npm run` nor `. venv/bin/activate`
 # The command works in a terminal.
-_execute_command("{} -m dash.development.component_generator"
-                 " ./src/lib/components"
-                 " {{cookiecutter.project_shortname}}"
-                 " -p package-info.json"
-                 " --jl-prefix '{{ cookiecutter.jl_prefix }}'"
-                 " --r-prefix '{{ cookiecutter.r_prefix }}'"
-                 .format(python_executable))
+_execute_command('npm run build:backends-activated')
 
 print('\n{} ready!\n'.format(project_shortname))
 

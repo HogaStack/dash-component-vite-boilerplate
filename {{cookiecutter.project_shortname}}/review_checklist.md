@@ -36,7 +36,7 @@
 
 -   The Dash team uses integration tests extensively, and we highly encourage you to write tests for the main functionality of your component. In the `tests` folder of the boilerplate, you can see a sample integration test. By launching it, you will run a sample Dash app in a browser. You can run the test with:
     ```
-    python -m tests.test_render
+    pytest tests
     ```
     [Browse the Dash component code on GitHub for more examples of testing.](https://github.com/plotly/dash-core-components)
 

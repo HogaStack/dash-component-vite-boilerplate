@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 /**
@@ -21,7 +21,9 @@ const {{cookiecutter.component_name}} = (props) => {
         * app server if a callback uses the modified prop as
         * Input or State.
         */
-        setProps({ value: e.target.value });
+        if (setProps) {
+            setProps({value: e.target.value});
+        }
     };
 
     return (

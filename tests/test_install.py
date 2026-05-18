@@ -38,6 +38,9 @@ def test_install(cookies, dash_duo):
         # base cookiecutter
         ['README.md'],
         ['package.json'],
+        ['vite.config.mjs'],
+        ['scripts', 'build.mjs'],
+        ['scripts', 'generate-components.mjs'],
         ['LICENSE'],
         # Py
         ['test_component', '__init__.py'],

@@ -27,7 +27,11 @@ export default class {{cookiecutter.component_name}} extends Component {
                          * app server if a callback uses the modified prop as
                          * Input or State.
                          */
-                        e => setProps({ value: e.target.value })
+                        e => {
+                            if (setProps) {
+                                setProps({value: e.target.value});
+                            }
+                        }
                     }
                 />
             </div>

@@ -1,16 +1,23 @@
 from __future__ import print_function
 import sys
 import re
+import keyword
 
 full_name = '{{cookiecutter.author_name}}'
 email = '{{cookiecutter.author_email}}'
 project_shortname = '{{cookiecutter.project_shortname}}'
+component_name = '{{cookiecutter.component_name}}'
 
 invalid_package_message = 'Invalid {variable}: {value}'
 project_shortname_message = '''
 ({variable}={value}) should be a valid Python package name.
 
 Only lowercase letters, numbers, and `_` are allowed, and the name must start with a non-numeric character. 
+'''
+component_name_message = '''
+({variable}={value}) should be a valid React component name.
+
+Use PascalCase with only letters and numbers, for example `MyComponent`.
 '''
 
 
@@ -26,13 +33,20 @@ def package_check(s):
 
 def check_specials_characters(s):
     pattern = re.compile("^[a-z_][a-z_0-9]*")
+    return not pattern.fullmatch(s) or keyword.iskeyword(s)
+
+
+def check_component_name(s):
+    pattern = re.compile("^[A-Z][A-Za-z0-9]*$")
     return not pattern.fullmatch(s)
 
 for values in (
     (package_check, 'author_name', full_name, invalid_package_message),
     (package_check, 'author_email', email, invalid_package_message),
     (check_specials_characters, 'project_shortname',
-     project_shortname, project_shortname_message)
+     project_shortname, project_shortname_message),
+    (check_component_name, 'component_name',
+     component_name, component_name_message)
 ):
     verify(*values)
 

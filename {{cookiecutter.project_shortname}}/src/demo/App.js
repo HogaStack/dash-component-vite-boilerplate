@@ -1,14 +1,14 @@
 /* eslint no-magic-numbers: 0 */
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 
 import { {{cookiecutter.component_name}} } from '../lib';
 
 const App = () => {
 
-    const [state, setState] = useState({value:'', label:'Type Here'});
+    const [state, setState] = useState({value: '', label: 'Type Here'});
     const setProps = (newProps) => {
-            setState(newProps);
-        };
+        setState(previousState => ({...previousState, ...newProps}));
+    };
 
     return (
         <div>
@@ -17,7 +17,7 @@ const App = () => {
                 {...state}
             />
         </div>
-    )
+    );
 };
 
 

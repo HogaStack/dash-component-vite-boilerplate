@@ -1,9 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 ### Vite
-.vite
-
-### Webpack (deprecated)
-.build_cache
+.vite/
 ### VisualStudioCode template
 .vscode/*
 !.vscode/settings.json
